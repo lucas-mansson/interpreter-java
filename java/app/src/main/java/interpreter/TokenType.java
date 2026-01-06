@@ -1,4 +1,4 @@
-package main;
+package interpreter;
 
 enum TokenType {
     // Single character tokens

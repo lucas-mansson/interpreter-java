@@ -1,4 +1,4 @@
-package main;
+package interpreter;
 
 class Token {
     final TokenType type;

@@ -12,6 +12,9 @@ The language is high-level, dynamically typed, and garbage collected, supporting
 - [ ] private/public data and methods
 - [ ] do-while
 - [ ] Static type checking
+- [ ] arrays and [] operator
+- [ ] Add multi-line comments
+- [ ] Add support for leading decimal point e.g. `.123`
 - [ ] ...
 
 
