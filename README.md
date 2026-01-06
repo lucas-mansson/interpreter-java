@@ -5,7 +5,10 @@ I try to add my own ideas and things so its not a 1:1 copy.
 
 The language is high-level, dynamically typed, and garbage collected, supporting scripting, procedural programming and basic object oriented concepts.
 
-## Things to add that are not in the book:
+## Things to add:
+
+Features I would like that are not in the book:
+
 - [ ] Differentiate integer and floating point numbers
 - [ ] Ternary operator
 - [ ] Differentiate const and var
@@ -19,7 +22,9 @@ The language is high-level, dynamically typed, and garbage collected, supporting
 
 
 ### Standard library
+
 The language has no Standard Library basically. Here are some things to add:
+
 - [ ] Print function
 - [ ] Read from command line
 - [ ] File I/O
@@ -28,7 +33,9 @@ The language has no Standard Library basically. Here are some things to add:
 
 
 ## Language definiton
+
 ### Primitive types
+
 - Booleans
 - Numbers (double-precision floating point)
 - Strings
@@ -36,8 +43,54 @@ The language has no Standard Library basically. Here are some things to add:
 
 ### Tokens
 
+The language has the following tokens (defined in `TokenType.java`):
+```java
+    // Single character tokens
+    LPAREN, // "("
+    RPAREN, // ")"
+    LBRACE, // "{"
+    RBRACE, // "}"
+    COMMA, // ","
+    DOT, // "."
+    MINUS, // "-"
+    PLUS, // "+"
+    SEMICOL, // ";"
+    SLASH, // "/"
+    STAR, // "*"
+
+    // Comparison operators
+    BANG, // "!"
+    BANG_EQ, // "!="
+    EQ, // "="
+    EQ_EQ, // "=="
+    GT, // ">"
+    GE, // ">="
+    LT, // "<"
+    LE, // "<="
+    AND, // "&&"
+    OR, // "||"
+
+    // Literals
+    ID,
+    STRING,
+    NUMBER,
+
+    // Keywords
+    VAR, // "var"
+    IF, // "if"
+    ELSE, // "else"
+    FOR, // "for"
+    WHILE, // "while"
+    FALSE, // "false"
+    TRUE, // "true"
+    FUN, // "fun"
+    RETURN, // "return"
+    NULL, // "null"
+    CLASS, // "class"
+    THIS, // "this"
+    SUPER, // "super"
+    PRINT, // "print"
+```
 
 ### Grammar
-
-Features that are not in the book that I would like to add.
 
