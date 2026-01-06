@@ -2,6 +2,7 @@ package interpreter;
 
 import static interpreter.TokenType.*;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,12 @@ class Scanner {
 
         tokens.add(new Token(EOF, "", null, line));
         return tokens;
+    }
+
+    public void printTokens(PrintStream out) {
+        for (Token token : tokens) {
+            out.println(token);
+        }
     }
 
     private boolean isAtEnd() {

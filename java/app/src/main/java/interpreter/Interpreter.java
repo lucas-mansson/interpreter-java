@@ -17,7 +17,7 @@ public class Interpreter {
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
-            System.out.println("usage: lucas [script]");
+            System.out.println("usage: script [script]");
             // unix sysexits.h: EX_USAGE 64 - command line usage error
             System.exit(64);
         } else if (args.length == 1) {
@@ -55,7 +55,7 @@ public class Interpreter {
         BufferedReader reader = new BufferedReader(input);
 
         while (true) {
-            System.out.println(">");
+            System.out.print(">");
             String line = reader.readLine();
             if (line == null) {
                 break;
