@@ -3,7 +3,7 @@
 This is the code for a simple interpreted programming language based on the book ["Crating interpreters" by Robert Nystrom.](https://craftinginterpreters.com/). 
 I try to add my own ideas and things so its not a 1:1 copy.
 
-The language is high-level, dynamically typed, and garbage collected, supporting both procedural programming and basic object oriented concepts.
+The language is high-level, dynamically typed, and garbage collected, supporting scripting, procedural programming and basic object oriented concepts.
 
 ## Things to add that are not in the book:
 - [ ] Differentiate integer and floating point numbers
