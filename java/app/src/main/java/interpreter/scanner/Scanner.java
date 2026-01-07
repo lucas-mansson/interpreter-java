@@ -3,6 +3,7 @@ package interpreter.scanner;
 import static interpreter.scanner.TokenType.*;
 
 import java.io.PrintStream;
+import interpreter.Interpreter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
