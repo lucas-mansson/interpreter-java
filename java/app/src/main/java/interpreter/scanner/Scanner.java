@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class Scanner {
+public class Scanner {
     private final String src; // store source code as string
     private final List<Token> tokens = new ArrayList<>();
 
@@ -190,7 +190,7 @@ class Scanner {
         }
 
         if (isAtEnd()) {
-            Interpreter.error(line, "unterminated string");
+            Interpreter.error(line, current, "unterminated string");
             return;
         }
         // When we get here, we have the closing '"'
@@ -255,6 +255,6 @@ class Scanner {
     }
 
     private void unexpectedCharError(char c) {
-        Interpreter.error(line, "Unexpected character: " + c);
+        Interpreter.error(line, current, "Unexpected character: " + c);
     }
 }
