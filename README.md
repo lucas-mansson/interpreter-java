@@ -3,7 +3,7 @@
 This is the code for a simple interpreted programming language based on the book ["Crating interpreters" by Robert Nystrom.](https://craftinginterpreters.com/). 
 I try to add my own ideas and things so its not a 1:1 copy.
 
-The language is high-level, dynamically typed, and garbage collected, supporting scripting, procedural programming and basic object oriented concepts.
+The language is high-level, dynamically typed, and garbage collected, supporting scripting, procedural programming and basic object oriented concepts. You can read more about the language below.
 
 ## Things to add:
 
@@ -32,7 +32,7 @@ The language has no Standard Library basically. Here are some things to add:
 - [ ] ...
 
 
-## Language definiton
+## Language specification
 
 ### Primitive types
 
@@ -40,6 +40,9 @@ The language has no Standard Library basically. Here are some things to add:
 - Numbers (double-precision floating point)
 - Strings
 - null
+
+### Grammar
+
 
 ### Tokens
 
@@ -91,6 +94,4 @@ The language has the following tokens (defined in `TokenType.java`):
     SUPER, // "super"
     PRINT, // "print"
 ```
-
-### Grammar
 
