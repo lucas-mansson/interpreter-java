@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.scanner;
 
 enum TokenType {
     // Single character tokens

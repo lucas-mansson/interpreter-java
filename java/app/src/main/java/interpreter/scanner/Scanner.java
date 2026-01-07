@@ -1,6 +1,6 @@
-package interpreter;
+package interpreter.scanner;
 
-import static interpreter.TokenType.*;
+import static interpreter.scanner.TokenType.*;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
