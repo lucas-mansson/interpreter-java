@@ -3,7 +3,7 @@ package interpreter.scanner;
 import static interpreter.scanner.TokenType.*;
 
 import java.io.PrintStream;
-import interpreter.Interpreter;
+import interpreter.Main;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -196,7 +196,7 @@ public class Scanner {
         }
 
         if (isAtEnd()) {
-            Interpreter.error(line, current, "unterminated string");
+            Main.error(line, current, "unterminated string");
             return;
         }
         // When we get here, we have the closing '"'
@@ -261,6 +261,6 @@ public class Scanner {
     }
 
     private void unexpectedCharError(char c) {
-        Interpreter.error(line, current, "Unexpected character: " + c);
+        Main.error(line, current, "Unexpected character: " + c);
     }
 }

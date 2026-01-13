@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class MainTest {
     @Test
     public void appHasAGreeting() {
-        Interpreter classUnderTest = new Interpreter();
+        Main classUnderTest = new Main();
         assertNotNull("app should have a greeting", classUnderTest.getClass());
     }
 }

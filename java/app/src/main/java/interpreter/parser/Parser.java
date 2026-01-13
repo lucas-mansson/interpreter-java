@@ -2,7 +2,7 @@ package interpreter.parser;
 
 import java.util.List;
 
-import interpreter.Interpreter;
+import interpreter.Lang;
 import interpreter.ast.Expr;
 import interpreter.scanner.Token;
 import interpreter.scanner.TokenType;
@@ -164,7 +164,7 @@ public class Parser {
     }
 
     private ParseError error(Token t, String msg) {
-        Interpreter.error(t, msg);
+        Lang.error(t, msg);
         return new ParseError();
     }
 
