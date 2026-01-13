@@ -89,6 +89,12 @@ public class Scanner {
             case '+':
                 addToken(PLUS);
                 break;
+            case ':':
+                addToken(COLON);
+                break;
+            case '?':
+                addToken(QUESTIONMARK);
+                break;
             case ';':
                 addToken(SEMICOL);
                 break;

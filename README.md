@@ -43,13 +43,28 @@ The language has no Standard Library basically. Here are some things to add:
 
 ### Grammar
 ```
-expression -> equality ("," equality)* ;
-equality   -> comparison ( ( "!=" | "==" ) comparison )* ;
-comparison -> term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
-term       -> factor ( ( "-" | "+" ) ) factor)* ;
-factor     -> unary ( ( "/" | "*" ) unary )* ;
-unary      -> ( "!" | "-" ) unary | primary ;
-primary    -> NUMBER | STRING | "true" | "false" | "null" | "(" expression ")" ;
+expression  -> conditional ("," conditional)* ;
+
+conditional -> equality 
+            | equality "?" expression ":" expression;
+
+equality    -> comparison ( ( "!=" | "==" ) comparison )* ;
+
+comparison  -> term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+
+term        -> factor ( ( "-" | "+" ) ) factor)* ;
+
+factor      -> unary ( ( "/" | "*" ) unary )* ;
+
+unary       -> ( "!" | "-" ) unary 
+               | primary ;
+
+primary     -> NUMBER 
+               | STRING 
+               | "true" 
+               | "false" 
+               | "null" 
+               | "(" expression ")" ;
 ```
 
 ### Tokens
@@ -68,6 +83,7 @@ The language has the following tokens (defined in `TokenType.java`):
     SEMICOL, // ";"
     SLASH, // "/"
     STAR, // "*"
+    COLON, // ":"
 
     // Comparison operators
     BANG, // "!"

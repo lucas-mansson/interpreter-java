@@ -13,6 +13,8 @@ public enum TokenType {
     SEMICOL, // ";"
     SLASH, // "/"
     STAR, // "*"
+    QUESTIONMARK, // "?"
+    COLON, // ":"
 
     // Comparison operators
     BANG, // "!"

@@ -31,6 +31,29 @@ public class AstPrinter implements Expr.Visitor<String> {
         return sb.toString();
     }
 
+    public String visitConditional(Expr.Conditional expr) {
+        String prevIndent = indent;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("conditional");
+        sb.append('\n');
+        indent += "    ";
+
+        sb.append(indent);
+        sb.append("condition: " + expr.condition.accept(this));
+        sb.append('\n');
+
+        sb.append(indent);
+        sb.append("then: " + expr.then.accept(this));
+        sb.append('\n');
+
+        sb.append(indent);
+        sb.append("else: " + expr.els.accept(this));
+
+        indent = prevIndent;
+        return sb.toString();
+    }
+
     @Override
     public String visitLiteral(Expr.Literal expr) {
         if (expr.value == null) {

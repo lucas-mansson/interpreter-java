@@ -29,11 +29,22 @@ public class Parser {
     }
 
     private Expr expression() {
-        Expr expr = equality();
+        Expr expr = conditional();
         while (match(COMMA)) {
             Token operator = prev();
-            Expr right = equality();
+            Expr right = conditional();
             expr = new Expr.Binary(expr, operator, right);
+        }
+        return expr;
+    }
+
+    private Expr conditional() {
+        Expr expr = equality();
+        if (match(QUESTIONMARK)) {
+            Expr then = expression();
+            consume(COLON, "Expect ':' after expression");
+            Expr elseExpr = expression();
+            expr = new Expr.Conditional(expr, then, elseExpr);
         }
         return expr;
     }

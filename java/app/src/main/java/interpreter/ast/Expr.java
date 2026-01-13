@@ -9,6 +9,8 @@ public abstract class Expr {
 
         public R visitBinary(Binary expr);
 
+        public R visitConditional(Conditional expr);
+
         public R visitGrouping(Grouping expr);
 
         public R visitLiteral(Literal expr);
@@ -31,6 +33,24 @@ public abstract class Expr {
         @Override
         public <R> R accept(Visitor<R> visitor) {
             return visitor.visitBinary(this);
+        }
+    }
+
+    public static class Conditional extends Expr {
+
+        final Expr condition;
+        final Expr then;
+        final Expr els;
+
+        public Conditional(Expr condition, Expr then, Expr els) {
+            this.condition = condition;
+            this.then = then;
+            this.els = els;
+        }
+
+        @Override
+        public <R> R accept(Visitor<R> visitor) {
+            return visitor.visitConditional(this);
         }
     }
 

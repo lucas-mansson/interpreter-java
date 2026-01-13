@@ -16,6 +16,10 @@ class RPNVisitor implements Expr.Visitor<String> {
         return printRPN(expr.operator.lexeme(), expr.left, expr.right);
     }
 
+    public String visitConditional(Expr.Conditional expr) {
+        return printRPN("conditional", expr.condition, expr.then, expr.els);
+    }
+
     @Override
     public String visitLiteral(Expr.Literal expr) {
         if (expr.value == null) {
