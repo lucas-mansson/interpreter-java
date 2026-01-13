@@ -3,80 +3,80 @@ package interpreter.ast;
 import java.util.List;
 import interpreter.scanner.Token;
 
-abstract class Expr {
+public abstract class Expr {
 
-    interface Visitor<R> {
+    public interface Visitor<R> {
 
-        R visitBinary(Binary expr);
+        public R visitBinary(Binary expr);
 
-        R visitGrouping(Grouping expr);
+        public R visitGrouping(Grouping expr);
 
-        R visitLiteral(Literal expr);
+        public R visitLiteral(Literal expr);
 
-        R visitUnary(Unary expr);
+        public R visitUnary(Unary expr);
     }
 
-    static class Binary extends Expr {
+    public static class Binary extends Expr {
 
         final Expr left;
         final Token operator;
         final Expr right;
 
-        Binary(Expr left, Token operator, Expr right) {
+        public Binary(Expr left, Token operator, Expr right) {
             this.left = left;
             this.operator = operator;
             this.right = right;
         }
 
         @Override
-        <R> R accept(Visitor<R> visitor) {
+        public <R> R accept(Visitor<R> visitor) {
             return visitor.visitBinary(this);
         }
     }
 
-    static class Grouping extends Expr {
+    public static class Grouping extends Expr {
 
         final Expr expression;
 
-        Grouping(Expr expression) {
+        public Grouping(Expr expression) {
             this.expression = expression;
         }
 
         @Override
-        <R> R accept(Visitor<R> visitor) {
+        public <R> R accept(Visitor<R> visitor) {
             return visitor.visitGrouping(this);
         }
     }
 
-    static class Literal extends Expr {
+    public static class Literal extends Expr {
 
         final Object value;
 
-        Literal(Object value) {
+        public Literal(Object value) {
             this.value = value;
         }
 
         @Override
-        <R> R accept(Visitor<R> visitor) {
+        public <R> R accept(Visitor<R> visitor) {
             return visitor.visitLiteral(this);
         }
     }
 
-    static class Unary extends Expr {
+    public static class Unary extends Expr {
 
         final Token operator;
         final Expr right;
 
-        Unary(Token operator, Expr right) {
+        public Unary(Token operator, Expr right) {
             this.operator = operator;
             this.right = right;
         }
 
         @Override
-        <R> R accept(Visitor<R> visitor) {
+        public <R> R accept(Visitor<R> visitor) {
             return visitor.visitUnary(this);
         }
     }
 
-    abstract <R> R accept(Visitor<R> visitor);
+    public abstract <R> R accept(Visitor<R> visitor);
 }

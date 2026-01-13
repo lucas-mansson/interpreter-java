@@ -1,7 +1,12 @@
 package interpreter;
 
+import interpreter.parser.Parser;
 import interpreter.scanner.Scanner;
 import interpreter.scanner.Token;
+import interpreter.scanner.TokenType;
+import interpreter.ast.AstPrinter;
+import interpreter.ast.Expr;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,10 +48,14 @@ public class Interpreter {
         // not to be confused with java.util.Scanner
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
-        // Just print for now
-        for (Token token : tokens) {
-            System.out.println(token);
+
+        Parser parser = new Parser(tokens);
+        Expr expr = parser.parse();
+
+        if (hadError) {
+            return;
         }
+        System.out.println(new AstPrinter().print(expr));
     }
 
     private static void runPrompt() throws IOException {
@@ -67,6 +76,14 @@ public class Interpreter {
 
     public static void error(int line, int column, String message) {
         report(line, column, "", message);
+    }
+
+    public static void error(Token token, String message) {
+        if (token.type() == TokenType.EOF) {
+            report(token.line(), token.col(), " at end", message);
+        } else {
+            report(token.line(), token.col(), " at '" + token.lexeme() + "'", message);
+        }
     }
 
     private static void report(int line, int column, String where, String message) {

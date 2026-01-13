@@ -47,7 +47,7 @@ public class Scanner {
             scanToken();
         }
 
-        tokens.add(new Token(EOF, "", null, line));
+        tokens.add(new Token(EOF, "", null, line, start));
         return tokens;
     }
 
@@ -251,7 +251,7 @@ public class Scanner {
 
     private void addToken(TokenType type, Object literal) {
         String text = src.substring(start, current);
-        tokens.add(new Token(type, text, literal, line));
+        tokens.add(new Token(type, text, literal, line, start));
     }
 
     private void unexpectedCharError(char c) {

@@ -3,9 +3,9 @@ package interpreter.ast;
 import interpreter.scanner.*;
 import interpreter.scanner.TokenType;
 
-class AstPrinterVisitor implements Expr.Visitor<String> {
+public class AstPrinter implements Expr.Visitor<String> {
 
-    String print(Expr expr) {
+    public String print(Expr expr) {
         return expr.accept(this);
     }
 
@@ -44,12 +44,13 @@ class AstPrinterVisitor implements Expr.Visitor<String> {
         return sb.toString();
     }
 
+    // example test function
     public static void main(String[] args) {
         Expr expr = new Expr.Binary(
                 new Expr.Unary(
-                        new Token(TokenType.MINUS, "-", null, 1), new Expr.Literal(123)),
-                new Token(TokenType.STAR, "*", null, 1),
+                        new Token(TokenType.MINUS, "-", null, 1, 1), new Expr.Literal(123)),
+                new Token(TokenType.STAR, "*", null, 1, 1),
                 new Expr.Grouping(new Expr.Literal(45.67)));
-        System.out.println(new AstPrinterVisitor().print(expr));
+        System.out.println(new AstPrinter().print(expr));
     }
 }
