@@ -1,6 +1,6 @@
 package interpreter.scanner;
 
-enum TokenType {
+public enum TokenType {
     // Single character tokens
     LPAREN, // "("
     RPAREN, // ")"

@@ -6,9 +6,13 @@ import interpreter.scanner.Token;
 abstract class Expr {
 
     interface Visitor<R> {
+
         R visitBinaryExpr(BinaryExpr expr);
+
         R visitGroupingExpr(GroupingExpr expr);
+
         R visitLiteralExpr(LiteralExpr expr);
+
         R visitUnaryExpr(UnaryExpr expr);
     }
 
