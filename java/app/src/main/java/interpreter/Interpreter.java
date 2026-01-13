@@ -3,7 +3,6 @@ package interpreter;
 import interpreter.ast.Expr;
 import interpreter.scanner.Token;
 import interpreter.errors.RuntimeError;
-import static interpreter.scanner.TokenType.*;
 
 public class Interpreter implements Expr.Visitor<Object> {
 
@@ -84,8 +83,8 @@ public class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof Double && right instanceof Double) {
                     return (double) left + (double) right;
                 }
-                if (left instanceof String && right instanceof String) {
-                    return (String) left + (String) right;
+                if (left instanceof String || right instanceof String) {
+                    return stringify(left) + stringify(right);
                 }
                 throw new RuntimeError(expr.operator, "Operands must be of same type");
             case SLASH:
