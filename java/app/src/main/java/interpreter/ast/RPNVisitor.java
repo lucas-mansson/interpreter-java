@@ -3,7 +3,9 @@ package interpreter.ast;
 import interpreter.scanner.*;
 import interpreter.scanner.TokenType;
 
-class AstPrinterVisitor implements Expr.Visitor<String> {
+// This class prints a expr in RPN format
+// RPN: Reverse polish notation, operands are placed before operator
+class RPNVisitor implements Expr.Visitor<String> {
 
     String print(Expr expr) {
         return expr.accept(this);
@@ -11,7 +13,7 @@ class AstPrinterVisitor implements Expr.Visitor<String> {
 
     @Override
     public String visitBinaryExpr(Expr.BinaryExpr expr) {
-        return parenthesize(expr.operator.lexeme(), expr.left, expr.right);
+        return printRPN(expr.operator.lexeme(), expr.left, expr.right);
     }
 
     @Override
@@ -24,32 +26,31 @@ class AstPrinterVisitor implements Expr.Visitor<String> {
 
     @Override
     public String visitGroupingExpr(Expr.GroupingExpr expr) {
-        return parenthesize("group", expr.expression);
+        return printRPN("group", expr);
     }
 
     @Override
     public String visitUnaryExpr(Expr.UnaryExpr expr) {
-        return parenthesize(expr.operator.lexeme(), expr.right);
+        return printRPN(expr.operator.lexeme(), expr.right);
     }
 
-    private String parenthesize(String name, Expr... exprs) {
+    public String printRPN(String name, Expr... exprs) {
         StringBuilder sb = new StringBuilder();
-
-        sb.append("(").append(name);
-        for (Expr expr : exprs) {
+        for (Expr e : exprs) {
+            sb.append(e.accept(this));
             sb.append(" ");
-            sb.append(expr.accept(this));
         }
-        sb.append(")");
+        sb.append(name);
         return sb.toString();
     }
 
     public static void main(String[] args) {
         Expr expr = new Expr.BinaryExpr(
-                new Expr.UnaryExpr(
-                        new Token(TokenType.MINUS, "-", null, 1), new Expr.LiteralExpr(123)),
+                new Expr.BinaryExpr(new Expr.LiteralExpr(1), new Token(TokenType.PLUS, "+", null, 1),
+                        new Expr.LiteralExpr(2)),
                 new Token(TokenType.STAR, "*", null, 1),
-                new Expr.GroupingExpr(new Expr.LiteralExpr(45.67)));
-        System.out.println(new AstPrinterVisitor().print(expr));
+                new Expr.BinaryExpr(new Expr.LiteralExpr(4), new Token(TokenType.MINUS, "-", null, 1),
+                        new Expr.LiteralExpr(3)));
+        System.out.println(new RPNVisitor().print(expr));
     }
 }
