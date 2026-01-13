@@ -5,13 +5,30 @@ import interpreter.scanner.TokenType;
 
 public class AstPrinter implements Expr.Visitor<String> {
 
+    private String indent;
+
     public String print(Expr expr) {
+        indent = "";
         return expr.accept(this);
     }
 
     @Override
     public String visitBinary(Expr.Binary expr) {
-        return parenthesize(expr.operator.lexeme(), expr.left, expr.right);
+        String prevIndent = indent;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(expr.operator.lexeme());
+        sb.append('\n');
+
+        indent += "    ";
+        sb.append(indent);
+        sb.append(expr.left.accept(this));
+        sb.append('\n');
+        sb.append(indent);
+        sb.append(expr.right.accept(this));
+
+        indent = prevIndent;
+        return sb.toString();
     }
 
     @Override
@@ -24,25 +41,48 @@ public class AstPrinter implements Expr.Visitor<String> {
 
     @Override
     public String visitGrouping(Expr.Grouping expr) {
-        return parenthesize("group", expr.expression);
+        String prevIndent = indent;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("group");
+        sb.append('\n');
+
+        indent += "    ";
+        sb.append(indent);
+        sb.append(expr.expression.accept(this));
+
+        indent = prevIndent;
+        return sb.toString();
     }
 
     @Override
     public String visitUnary(Expr.Unary expr) {
-        return parenthesize(expr.operator.lexeme(), expr.right);
-    }
-
-    private String parenthesize(String name, Expr... exprs) {
+        String prevIndent = indent;
         StringBuilder sb = new StringBuilder();
 
-        sb.append("(").append(name);
-        for (Expr expr : exprs) {
-            sb.append(" ");
-            sb.append(expr.accept(this));
-        }
-        sb.append(")");
+        sb.append(expr.operator.lexeme());
+        sb.append('\n');
+
+        sb.append(indent);
+        sb.append(expr.right.accept(this));
+
+        indent = prevIndent;
         return sb.toString();
     }
+
+    /*
+     * private String parenthesize(String name, Expr... exprs) {
+     * StringBuilder sb = new StringBuilder();
+     * 
+     * sb.append(name);
+     * for (Expr expr : exprs) {
+     * sb.append('\n');
+     * sb.append(indent);
+     * sb.append(expr.accept(this));
+     * }
+     * return sb.toString();
+     * }
+     */
 
     // example test function
     public static void main(String[] args) {
