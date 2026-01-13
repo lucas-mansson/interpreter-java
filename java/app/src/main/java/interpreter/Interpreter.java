@@ -88,6 +88,9 @@ public class Interpreter implements Expr.Visitor<Object> {
                 }
                 throw new RuntimeError(expr.operator, "Operands must be of compatible types");
             case SLASH:
+                if (right.equals(0.0)) {
+                    throw new RuntimeError(expr.operator, "Cannot divide by 0");
+                }
                 return (double) left / (double) right;
             case STAR:
                 return (double) left * (double) right;
