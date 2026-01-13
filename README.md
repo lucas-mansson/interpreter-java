@@ -43,7 +43,7 @@ The language has no Standard Library basically. Here are some things to add:
 
 ### Grammar
 ```
-expression -> equality
+expression -> equality ("," equality)* ;
 equality   -> comparison ( ( "!=" | "==" ) comparison )* ;
 comparison -> term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
 term       -> factor ( ( "-" | "+" ) ) factor)* ;
