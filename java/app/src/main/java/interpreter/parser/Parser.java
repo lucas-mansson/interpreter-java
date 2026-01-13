@@ -91,9 +91,9 @@ public class Parser {
         if (match(FALSE))
             return new Expr.Literal(false);
         if (match(TRUE))
-            return new Expr.Literal(false);
+            return new Expr.Literal(true);
         if (match(NULL))
-            return new Expr.Literal(false);
+            return new Expr.Literal(null);
 
         if (match(NUMBER, STRING)) {
             return new Expr.Literal(prev().literal());
