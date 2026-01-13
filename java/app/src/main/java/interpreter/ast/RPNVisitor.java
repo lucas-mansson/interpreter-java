@@ -12,12 +12,12 @@ class RPNVisitor implements Expr.Visitor<String> {
     }
 
     @Override
-    public String visitBinaryExpr(Expr.BinaryExpr expr) {
+    public String visitBinary(Expr.Binary expr) {
         return printRPN(expr.operator.lexeme(), expr.left, expr.right);
     }
 
     @Override
-    public String visitLiteralExpr(Expr.LiteralExpr expr) {
+    public String visitLiteral(Expr.Literal expr) {
         if (expr.value == null) {
             return "null";
         }
@@ -25,12 +25,12 @@ class RPNVisitor implements Expr.Visitor<String> {
     }
 
     @Override
-    public String visitGroupingExpr(Expr.GroupingExpr expr) {
+    public String visitGrouping(Expr.Grouping expr) {
         return printRPN("group", expr);
     }
 
     @Override
-    public String visitUnaryExpr(Expr.UnaryExpr expr) {
+    public String visitUnary(Expr.Unary expr) {
         return printRPN(expr.operator.lexeme(), expr.right);
     }
 
@@ -45,12 +45,12 @@ class RPNVisitor implements Expr.Visitor<String> {
     }
 
     public static void main(String[] args) {
-        Expr expr = new Expr.BinaryExpr(
-                new Expr.BinaryExpr(new Expr.LiteralExpr(1), new Token(TokenType.PLUS, "+", null, 1),
-                        new Expr.LiteralExpr(2)),
+        Expr expr = new Expr.Binary(
+                new Expr.Binary(new Expr.Literal(1), new Token(TokenType.PLUS, "+", null, 1),
+                        new Expr.Literal(2)),
                 new Token(TokenType.STAR, "*", null, 1),
-                new Expr.BinaryExpr(new Expr.LiteralExpr(4), new Token(TokenType.MINUS, "-", null, 1),
-                        new Expr.LiteralExpr(3)));
+                new Expr.Binary(new Expr.Literal(4), new Token(TokenType.MINUS, "-", null, 1),
+                        new Expr.Literal(3)));
         System.out.println(new RPNVisitor().print(expr));
     }
 }

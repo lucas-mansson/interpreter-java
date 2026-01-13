@@ -14,10 +14,10 @@ public class GenerateAst {
         }
         String outputDir = args[0];
         defineAst(outputDir, "Expr", Arrays.asList(
-                "BinaryExpr: Expr left, Token operator, Expr right",
-                "GroupingExpr: Expr expression",
-                "LiteralExpr: Object value",
-                "UnaryExpr: Token operator, Expr right"));
+                "Binary: Expr left, Token operator, Expr right",
+                "Grouping: Expr expression",
+                "Literal: Object value",
+                "Unary: Token operator, Expr right"));
     }
 
     private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {

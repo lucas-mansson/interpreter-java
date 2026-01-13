@@ -7,22 +7,22 @@ abstract class Expr {
 
     interface Visitor<R> {
 
-        R visitBinaryExpr(BinaryExpr expr);
+        R visitBinary(Binary expr);
 
-        R visitGroupingExpr(GroupingExpr expr);
+        R visitGrouping(Grouping expr);
 
-        R visitLiteralExpr(LiteralExpr expr);
+        R visitLiteral(Literal expr);
 
-        R visitUnaryExpr(UnaryExpr expr);
+        R visitUnary(Unary expr);
     }
 
-    static class BinaryExpr extends Expr {
+    static class Binary extends Expr {
 
         final Expr left;
         final Token operator;
         final Expr right;
 
-        BinaryExpr(Expr left, Token operator, Expr right) {
+        Binary(Expr left, Token operator, Expr right) {
             this.left = left;
             this.operator = operator;
             this.right = right;
@@ -30,51 +30,51 @@ abstract class Expr {
 
         @Override
         <R> R accept(Visitor<R> visitor) {
-            return visitor.visitBinaryExpr(this);
+            return visitor.visitBinary(this);
         }
     }
 
-    static class GroupingExpr extends Expr {
+    static class Grouping extends Expr {
 
         final Expr expression;
 
-        GroupingExpr(Expr expression) {
+        Grouping(Expr expression) {
             this.expression = expression;
         }
 
         @Override
         <R> R accept(Visitor<R> visitor) {
-            return visitor.visitGroupingExpr(this);
+            return visitor.visitGrouping(this);
         }
     }
 
-    static class LiteralExpr extends Expr {
+    static class Literal extends Expr {
 
         final Object value;
 
-        LiteralExpr(Object value) {
+        Literal(Object value) {
             this.value = value;
         }
 
         @Override
         <R> R accept(Visitor<R> visitor) {
-            return visitor.visitLiteralExpr(this);
+            return visitor.visitLiteral(this);
         }
     }
 
-    static class UnaryExpr extends Expr {
+    static class Unary extends Expr {
 
         final Token operator;
         final Expr right;
 
-        UnaryExpr(Token operator, Expr right) {
+        Unary(Token operator, Expr right) {
             this.operator = operator;
             this.right = right;
         }
 
         @Override
         <R> R accept(Visitor<R> visitor) {
-            return visitor.visitUnaryExpr(this);
+            return visitor.visitUnary(this);
         }
     }
 
