@@ -86,7 +86,7 @@ public class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String || right instanceof String) {
                     return stringify(left) + stringify(right);
                 }
-                throw new RuntimeError(expr.operator, "Operands must be of same type");
+                throw new RuntimeError(expr.operator, "Operands must be of compatible types");
             case SLASH:
                 return (double) left / (double) right;
             case STAR:
