@@ -6,6 +6,7 @@ import interpreter.scanner.Token;
 import interpreter.scanner.TokenType;
 import interpreter.ast.AstPrinter;
 import interpreter.ast.Expr;
+import interpreter.errors.RuntimeError;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +18,10 @@ import java.util.List;
 
 public class Lang {
 
+    private static final Interpreter interpreter = new Interpreter();
+
     static boolean hadError = false;
+    static boolean hadRuntimeError = false;
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -42,6 +46,10 @@ public class Lang {
             // unix sysexits.h: EX_DATAERR 65 - data format error
             System.exit(65);
         }
+        if (hadRuntimeError) {
+            // unix sysexits.h: EX_SOFTWARE 70 - internal software error
+            System.exit(70);
+        }
     }
 
     private static void run(String source) {
@@ -55,7 +63,8 @@ public class Lang {
         if (hadError) {
             return;
         }
-        System.out.println(new AstPrinter().print(expr));
+        // System.out.println(new AstPrinter().print(expr));
+        interpreter.interpret(expr);
     }
 
     private static void runPrompt() throws IOException {
@@ -79,11 +88,16 @@ public class Lang {
     }
 
     public static void error(Token token, String message) {
-        if (token.type() == TokenType.EOF) {
-            report(token.line(), token.col(), " at end", message);
+        if (token.type == TokenType.EOF) {
+            report(token.line, token.col, " at end", message);
         } else {
-            report(token.line(), token.col(), " at '" + token.lexeme() + "'", message);
+            report(token.line, token.col, " at '" + token.lexeme + "'", message);
         }
+    }
+
+    public static void runtimeError(RuntimeError error) {
+        System.err.println(error.getMessage() + "\n[line " + error.token.line + ":" + error.token.col + "]");
+        hadRuntimeError = true;
     }
 
     private static void report(int line, int column, String where, String message) {

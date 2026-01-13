@@ -26,7 +26,7 @@ java {
 }
 application {
     // Define the main class for the application.
-    mainClass = "interpreter.Interpreter"
+    mainClass = "interpreter.Lang"
 }
 
 tasks.jar {

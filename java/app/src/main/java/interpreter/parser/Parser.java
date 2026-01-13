@@ -107,7 +107,7 @@ public class Parser {
             return new Expr.Literal(null);
 
         if (match(NUMBER, STRING)) {
-            return new Expr.Literal(prev().literal());
+            return new Expr.Literal(prev().literal);
         }
 
         if (match(LPAREN)) {
@@ -133,7 +133,7 @@ public class Parser {
         if (isAtEnd()) {
             return false;
         }
-        return peek().type() == t;
+        return peek().type == t;
     }
 
     private Token advance() {
@@ -144,7 +144,7 @@ public class Parser {
     }
 
     private boolean isAtEnd() {
-        return peek().type() == EOF;
+        return peek().type == EOF;
     }
 
     private Token peek() {

@@ -17,7 +17,7 @@ public class AstPrinter implements Expr.Visitor<String> {
         String prevIndent = indent;
         StringBuilder sb = new StringBuilder();
 
-        sb.append(expr.operator.lexeme());
+        sb.append(expr.operator.lexeme);
         sb.append('\n');
 
         indent += "    ";
@@ -83,7 +83,7 @@ public class AstPrinter implements Expr.Visitor<String> {
         String prevIndent = indent;
         StringBuilder sb = new StringBuilder();
 
-        sb.append(expr.operator.lexeme());
+        sb.append(expr.operator.lexeme);
         sb.append('\n');
 
         sb.append(indent);

@@ -13,7 +13,7 @@ class RPNVisitor implements Expr.Visitor<String> {
 
     @Override
     public String visitBinary(Expr.Binary expr) {
-        return printRPN(expr.operator.lexeme(), expr.left, expr.right);
+        return printRPN(expr.operator.lexeme, expr.left, expr.right);
     }
 
     public String visitConditional(Expr.Conditional expr) {
@@ -35,7 +35,7 @@ class RPNVisitor implements Expr.Visitor<String> {
 
     @Override
     public String visitUnary(Expr.Unary expr) {
-        return printRPN(expr.operator.lexeme(), expr.right);
+        return printRPN(expr.operator.lexeme, expr.right);
     }
 
     public String printRPN(String name, Expr... exprs) {

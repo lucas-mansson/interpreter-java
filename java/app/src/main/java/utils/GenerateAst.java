@@ -59,7 +59,7 @@ public class GenerateAst {
         // Fields
         String[] fieldArr = fields.split(", ");
         for (String field : fieldArr) {
-            writer.println("        final " + field + ";");
+            writer.println("        public final " + field + ";");
         }
         writer.println();
 
