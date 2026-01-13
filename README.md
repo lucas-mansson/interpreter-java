@@ -42,12 +42,20 @@ The language has no Standard Library basically. Here are some things to add:
 - null
 
 ### Grammar
-
+```
+expression -> equality
+equality   -> comparison ( ( "!=" | "==" ) comparison )* ;
+comparison -> term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+term       -> factor ( ( "-" | "+" ) ) factor)* ;
+factor     -> unary ( ( "/" | "*" ) unary )* ;
+unary      -> ( "!" | "-" ) unary | primary ;
+primary    -> NUMBER | STRING | "true" | "false" | "null" | "(" expression ")" ;
+```
 
 ### Tokens
 
 The language has the following tokens (defined in `TokenType.java`):
-```java
+```c
     // Single character tokens
     LPAREN, // "("
     RPAREN, // ")"
