@@ -64,8 +64,13 @@ public class Lang {
         if (hadError) {
             return;
         }
-        // System.out.println(new AstPrinter().print(expr));
-        interpreter.interpret(stmts);
+        for (Stmt s : stmts) {
+            if (s instanceof Stmt.ExprStmt) {
+                System.out.println(interpreter.eval(((Stmt.ExprStmt) s).expr));
+            } else {
+                interpreter.execute(s);
+            }
+        }
     }
 
     private static void runPrompt() throws IOException {
