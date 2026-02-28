@@ -42,7 +42,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitVar(Stmt.Var stmt) {
-        Object value = null;
+        Object value = Environment.UNINITIALIZED;
         if (stmt.initializer != null) {
             value = eval(stmt.initializer);
         }
