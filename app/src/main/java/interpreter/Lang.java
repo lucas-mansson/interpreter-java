@@ -20,7 +20,7 @@ import java.util.List;
 public class Lang {
 
     private static final Interpreter interpreter = new Interpreter();
-
+    static boolean repl = false;
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
 
@@ -53,27 +53,8 @@ public class Lang {
         }
     }
 
-    private static void run(String source) {
-        // not to be confused with java.util.Scanner
-        Scanner scanner = new Scanner(source);
-        List<Token> tokens = scanner.scanTokens();
-
-        Parser parser = new Parser(tokens);
-        List<Stmt> stmts = parser.parse();
-
-        if (hadError) {
-            return;
-        }
-        for (Stmt s : stmts) {
-            if (s instanceof Stmt.ExprStmt) {
-                System.out.println(interpreter.eval(((Stmt.ExprStmt) s).expr));
-            } else {
-                interpreter.execute(s);
-            }
-        }
-    }
-
     private static void runPrompt() throws IOException {
+        repl = true;
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
 
@@ -86,6 +67,32 @@ public class Lang {
             run(line);
             // reset error after each line in REPL to avoid crashing
             hadError = false;
+        }
+    }
+
+    private static void run(String source) {
+        // not to be confused with java.util.Scanner
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+
+        Parser parser = new Parser(tokens);
+        List<Stmt> stmts = parser.parse();
+
+        if (hadError) {
+            return;
+        }
+        // No REPL, interpret like normal
+        if (!repl) {
+            interpreter.interpret(stmts);
+            return;
+        }
+        // If we are running repl, we want to print expressions and execute statements
+        for (Stmt s : stmts) {
+            if (s instanceof Stmt.ExprStmt) {
+                System.out.println(interpreter.eval(((Stmt.ExprStmt) s).expr));
+            } else {
+                interpreter.execute(s);
+            }
         }
     }
 
