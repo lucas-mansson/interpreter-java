@@ -1,9 +1,11 @@
 package interpreter.parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import interpreter.Lang;
 import interpreter.ast.Expr;
+import interpreter.ast.Stmt;
 import interpreter.scanner.Token;
 import interpreter.scanner.TokenType;
 import static interpreter.scanner.TokenType.*;
@@ -20,15 +22,34 @@ public class Parser {
         this.tokens = tokens;
     }
 
-    public Expr parse() {
-        try {
-            return expression();
-        } catch (ParseError e) {
-            return null;
+    public List<Stmt> parse() {
+        List<Stmt> stmts = new ArrayList<>();
+        while (!isAtEnd()) {
+            stmts.add(stmt());
         }
+        return stmts;
     }
 
-    private Expr expression() {
+    private Stmt stmt() {
+        if (match(PRINT)) {
+            return printStmt();
+        }
+        return exprStmt();
+    }
+
+    private Stmt printStmt() {
+        Expr val = expr();
+        consume(SEMICOL, "Expect ';' after value");
+        return new Stmt.Print(val);
+    }
+
+    private Stmt exprStmt() {
+        Expr expr = expr();
+        consume(SEMICOL, "Expect ';' after expression");
+        return new Stmt.ExprStmt(expr);
+    }
+
+    private Expr expr() {
         Expr expr = conditional();
         while (match(COMMA)) {
             Token operator = prev();
@@ -41,9 +62,9 @@ public class Parser {
     private Expr conditional() {
         Expr expr = equality();
         if (match(QUESTIONMARK)) {
-            Expr then = expression();
+            Expr then = expr();
             consume(COLON, "Expect ':' after expression");
-            Expr elseExpr = expression();
+            Expr elseExpr = expr();
             expr = new Expr.Conditional(expr, then, elseExpr);
         }
         return expr;
@@ -111,7 +132,7 @@ public class Parser {
         }
 
         if (match(LPAREN)) {
-            Expr expr = expression();
+            Expr expr = expr();
             consume(RPAREN, "Expect ')' after expression");
             return new Expr.Grouping(expr);
         }

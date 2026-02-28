@@ -56,10 +56,10 @@ public abstract class Expr {
 
     public static class Grouping extends Expr {
 
-        public final Expr expression;
+        public final Expr expr;
 
-        public Grouping(Expr expression) {
-            this.expression = expression;
+        public Grouping(Expr expr) {
+            this.expr = expr;
         }
 
         @Override

@@ -6,6 +6,7 @@ import interpreter.scanner.Token;
 import interpreter.scanner.TokenType;
 import interpreter.ast.AstPrinter;
 import interpreter.ast.Expr;
+import interpreter.ast.Stmt;
 import interpreter.errors.RuntimeError;
 
 import java.io.BufferedReader;
@@ -58,13 +59,13 @@ public class Lang {
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
-        Expr expr = parser.parse();
+        List<Stmt> stmts = parser.parse();
 
         if (hadError) {
             return;
         }
         // System.out.println(new AstPrinter().print(expr));
-        interpreter.interpret(expr);
+        interpreter.interpret(stmts);
     }
 
     private static void runPrompt() throws IOException {

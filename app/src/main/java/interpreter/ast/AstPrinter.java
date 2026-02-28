@@ -72,7 +72,7 @@ public class AstPrinter implements Expr.Visitor<String> {
 
         indent += "    ";
         sb.append(indent);
-        sb.append(expr.expression.accept(this));
+        sb.append(expr.expr.accept(this));
 
         indent = prevIndent;
         return sb.toString();

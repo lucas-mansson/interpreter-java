@@ -1,18 +1,34 @@
 package interpreter;
 
+import java.util.List;
+
 import interpreter.ast.Expr;
+import interpreter.ast.Stmt;
 import interpreter.scanner.Token;
 import interpreter.errors.RuntimeError;
 
-public class Interpreter implements Expr.Visitor<Object> {
+public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
-    public void interpret(Expr expr) {
+    public void interpret(List<Stmt> stmts) {
         try {
-            Object val = eval(expr);
-            System.out.println(stringify(val));
+            for (Stmt stmt : stmts) {
+                execute(stmt);
+            }
         } catch (RuntimeError err) {
             Lang.runtimeError(err);
         }
+    }
+
+    @Override
+    public Void visitExprStmt(Stmt.ExprStmt stmt) {
+        eval(stmt.expr);
+        return null;
+    }
+
+    public Void visitPrint(Stmt.Print stmt) {
+        Object val = eval(stmt.expr);
+        System.out.println(stringify(val));
+        return null;
     }
 
     @Override
@@ -22,7 +38,7 @@ public class Interpreter implements Expr.Visitor<Object> {
 
     @Override
     public Object visitGrouping(Expr.Grouping expr) {
-        return eval(expr.expression);
+        return eval(expr.expr);
     }
 
     @Override
@@ -107,6 +123,10 @@ public class Interpreter implements Expr.Visitor<Object> {
 
     private Object eval(Expr expr) {
         return expr.accept(this);
+    }
+
+    private void execute(Stmt stmt) {
+        stmt.accept(this);
     }
 
     private boolean isEqual(Object a, Object b) {
