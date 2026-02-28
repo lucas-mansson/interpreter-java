@@ -43,19 +43,26 @@ The language has no Standard Library basically. Here are some things to add:
 
 ### Grammar
 ```
+**Statements**
+
 program     -> declaration* EOF ;
 
-declaration -> varDecl
-               | stmt;
+declaration -> stmt 
+               | varDecl;
 
 stmt        -> exprStmt 
-               | printStmt ;
+               | printStmt 
+               | block ;
 
 varDecl     -> "var" ID ( "=" expr )? ";" ;
 
 exprStmt    -> expr ";" ;
 
 printStmt   -> "print" expr ";" ;
+
+block       -> "{" declaration "}"
+
+**Expressions**
 
 expr        -> assignment ("," assignment)* ;
 

@@ -35,6 +35,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitBlock(Stmt.Block stmt) {
+        executeBlock(stmt.statements, new Environment(environment));
+        return null;
+    }
+
+    @Override
     public Void visitVar(Stmt.Var stmt) {
         Object value = null;
         if (stmt.initializer != null) {
@@ -152,6 +158,19 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     private void execute(Stmt stmt) {
         stmt.accept(this);
+    }
+
+    private void executeBlock(List<Stmt> stmts, Environment env) {
+        Environment prev = this.environment;
+        try {
+            this.environment = env;
+            for (Stmt s : stmts) {
+                execute(s);
+            }
+
+        } finally {
+            this.environment = prev;
+        }
     }
 
     private boolean isEqual(Object a, Object b) {

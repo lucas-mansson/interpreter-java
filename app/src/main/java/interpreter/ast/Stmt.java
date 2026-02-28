@@ -7,11 +7,27 @@ public abstract class Stmt {
 
     public interface Visitor<R> {
 
+        public R visitBlock(Block stmt);
+
         public R visitExprStmt(ExprStmt stmt);
 
         public R visitPrint(Print stmt);
 
         public R visitVar(Var stmt);
+    }
+
+    public static class Block extends Stmt {
+
+        public final List<Stmt> statements;
+
+        public Block(List<Stmt> statements) {
+            this.statements = statements;
+        }
+
+        @Override
+        public <R> R accept(Visitor<R> visitor) {
+            return visitor.visitBlock(this);
+        }
     }
 
     public static class ExprStmt extends Stmt {
