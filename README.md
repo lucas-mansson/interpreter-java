@@ -43,6 +43,15 @@ The language has no Standard Library basically. Here are some things to add:
 
 ### Grammar
 ```
+program     -> statement * EOF ;
+
+statement   -> exprStmt 
+               | printStmt ;
+
+exprStmt    -> expression ";" ;
+
+printStmt   -> "print" expression ";" ;
+
 expression  -> conditional ("," conditional)* ;
 
 conditional -> equality 
