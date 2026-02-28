@@ -12,6 +12,11 @@ class RPNVisitor implements Expr.Visitor<String> {
     }
 
     @Override
+    public String visitAssign(Expr.Assign expr) {
+        return "";
+    }
+
+    @Override
     public String visitBinary(Expr.Binary expr) {
         return printRPN(expr.operator.lexeme, expr.left, expr.right);
     }

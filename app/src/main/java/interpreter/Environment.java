@@ -1,7 +1,5 @@
 package interpreter;
 
-import static interpreter.scanner.TokenType.values;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +19,14 @@ class Environment {
             return values.get(name.lexeme);
         }
         throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'");
+    }
+
+    public void assign(Token name, Object value) {
+        if (values.containsKey(name.lexeme)) {
+            values.put(name.lexeme, value);
+            return;
+        }
+        throw new RuntimeError(name, "Undefined variable " + name.lexeme);
     }
 
 }

@@ -7,6 +7,8 @@ public abstract class Expr {
 
     public interface Visitor<R> {
 
+        public R visitAssign(Assign expr);
+
         public R visitBinary(Binary expr);
 
         public R visitConditional(Conditional expr);
@@ -18,6 +20,22 @@ public abstract class Expr {
         public R visitUnary(Unary expr);
 
         public R visitVariable(Variable expr);
+    }
+
+    public static class Assign extends Expr {
+
+        public final Token name;
+        public final Expr value;
+
+        public Assign(Token name, Expr value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        @Override
+        public <R> R accept(Visitor<R> visitor) {
+            return visitor.visitAssign(this);
+        }
     }
 
     public static class Binary extends Expr {

@@ -51,13 +51,16 @@ declaration -> varDecl
 stmt        -> exprStmt 
                | printStmt ;
 
+varDecl     -> "var" ID ( "=" expr )? ";" ;
+
 exprStmt    -> expr ";" ;
 
 printStmt   -> "print" expr ";" ;
 
-varDecl     -> "var" ID ( "=" expr )? ";" ;
+expr        -> assignment ("," assignment)* ;
 
-expr        -> conditional ("," conditional)* ;
+assignment  -> conditional
+               | ID "=" assignment ;
 
 conditional -> equality 
             | equality "?" expr ":" expr;

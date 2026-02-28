@@ -13,6 +13,11 @@ public class AstPrinter implements Expr.Visitor<String> {
     }
 
     @Override
+    public String visitAssign(Expr.Assign expr) {
+        return "";
+    }
+
+    @Override
     public String visitBinary(Expr.Binary expr) {
         String prevIndent = indent;
         StringBuilder sb = new StringBuilder();
