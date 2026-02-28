@@ -62,6 +62,10 @@ public class AstPrinter implements Expr.Visitor<String> {
         return expr.value.toString();
     }
 
+    public String visitVariable(Expr.Variable var) {
+        return var.name.lexeme;
+    }
+
     @Override
     public String visitGrouping(Expr.Grouping expr) {
         String prevIndent = indent;

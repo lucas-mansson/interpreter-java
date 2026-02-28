@@ -9,6 +9,8 @@ import interpreter.errors.RuntimeError;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
+    private Environment environment = new Environment();
+
     public void interpret(List<Stmt> stmts) {
         try {
             for (Stmt stmt : stmts) {
@@ -25,10 +27,26 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
+    @Override
     public Void visitPrint(Stmt.Print stmt) {
         Object val = eval(stmt.expr);
         System.out.println(stringify(val));
         return null;
+    }
+
+    @Override
+    public Void visitVar(Stmt.Var stmt) {
+        Object value = null;
+        if (stmt.initializer != null) {
+            value = eval(stmt.initializer);
+        }
+        environment.define(stmt.name.lexeme, value);
+        return null;
+    }
+
+    @Override
+    public Object visitVariable(Expr.Variable var) {
+        return environment.get(var.name);
     }
 
     @Override

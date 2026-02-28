@@ -25,9 +25,32 @@ public class Parser {
     public List<Stmt> parse() {
         List<Stmt> stmts = new ArrayList<>();
         while (!isAtEnd()) {
-            stmts.add(stmt());
+            stmts.add(declaration());
         }
         return stmts;
+    }
+
+    private Stmt declaration() {
+        try {
+            if (match(VAR)) {
+                return varDecl();
+            }
+            return stmt();
+        } catch (ParseError err) {
+            synchronize();
+            return null;
+        }
+    }
+
+    private Stmt varDecl() {
+        Token name = consume(ID, "Expected variable name");
+
+        Expr initial = null;
+        if (match(EQ)) {
+            initial = expr();
+        }
+        consume(SEMICOL, "Expect ';' after variable declaration");
+        return new Stmt.Var(name, initial);
     }
 
     private Stmt stmt() {
@@ -131,6 +154,10 @@ public class Parser {
             return new Expr.Literal(prev().literal);
         }
 
+        if (match(ID)) {
+            return new Expr.Variable(prev());
+        }
+
         if (match(LPAREN)) {
             Expr expr = expr();
             consume(RPAREN, "Expect ')' after expression");
@@ -187,6 +214,27 @@ public class Parser {
     private ParseError error(Token t, String msg) {
         Lang.error(t, msg);
         return new ParseError();
+    }
+
+    private void synchronize() {
+        advance();
+        while (!isAtEnd()) {
+            if (prev().type == SEMICOL) {
+                return;
+            }
+            switch (peek().type) {
+                case CLASS:
+                case FUN:
+                case VAR:
+                case FOR:
+                case IF:
+                case WHILE:
+                case PRINT:
+                case RETURN:
+                    return;
+            }
+            advance();
+        }
     }
 
 }

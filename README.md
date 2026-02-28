@@ -43,19 +43,24 @@ The language has no Standard Library basically. Here are some things to add:
 
 ### Grammar
 ```
-program     -> statement * EOF ;
+program     -> declaration* EOF ;
 
-statement   -> exprStmt 
+declaration -> varDecl
+               | stmt;
+
+stmt        -> exprStmt 
                | printStmt ;
 
-exprStmt    -> expression ";" ;
+exprStmt    -> expr ";" ;
 
-printStmt   -> "print" expression ";" ;
+printStmt   -> "print" expr ";" ;
 
-expression  -> conditional ("," conditional)* ;
+varDecl     -> "var" ID ( "=" expr )? ";" ;
+
+expr        -> conditional ("," conditional)* ;
 
 conditional -> equality 
-            | equality "?" expression ":" expression;
+            | equality "?" expr ":" expr;
 
 equality    -> comparison ( ( "!=" | "==" ) comparison )* ;
 
@@ -73,7 +78,8 @@ primary     -> NUMBER
                | "true" 
                | "false" 
                | "null" 
-               | "(" expression ")" ;
+               | "(" expression ")" 
+               | ID ;
 ```
 
 ### Tokens
