@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>app</name>
-	<comment>Project app created by Buildship.</comment>
+	<name>interpreter</name>
+	<comment>Project interpreter created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -16,7 +16,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1767690111880</id>
+			<id>1772285142116</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
