@@ -89,7 +89,7 @@ public class Parser {
     private Stmt ifStmt() {
         consume(LPAREN, "Expected '(' after if");
         Expr condition = expr();
-        consume(LPAREN, "Expected ')' after condition");
+        consume(RPAREN, "Expected ')' after condition");
         Stmt thenBranch = stmt();
         Stmt elseBranch = null;
         if (match(ELSE)) {
