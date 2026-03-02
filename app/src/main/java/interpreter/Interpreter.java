@@ -28,6 +28,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitIf(Stmt.If stmt) {
+        if (isTruthy(eval(stmt.condition))) {
+            execute(stmt.thenBranch);
+        } else if (stmt.thenBranch != null) {
+            execute(stmt.elseBranch);
+        }
+        return null;
+    }
+
+    @Override
     public Void visitPrint(Stmt.Print stmt) {
         Object val = eval(stmt.expr);
         System.out.println(stringify(val));

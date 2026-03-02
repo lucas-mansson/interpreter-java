@@ -51,10 +51,13 @@ declaration -> stmt
                | varDecl;
 
 stmt        -> exprStmt 
+               | ifStmt
                | printStmt 
                | block ;
 
 varDecl     -> "var" ID ( "=" expr )? ";" ;
+
+ifStmt      -> "if" "(" expr ")" stmt ( "else" stmt )? ;
 
 exprStmt    -> expr ";" ;
 

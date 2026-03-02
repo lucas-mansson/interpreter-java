@@ -54,6 +54,8 @@ public class Parser {
     }
 
     private Stmt stmt() {
+        if (match(IF))
+            return ifStmt();
         if (match(PRINT)) {
             return printStmt();
         }
@@ -82,6 +84,18 @@ public class Parser {
         Expr expr = expr();
         consume(SEMICOL, "Expect ';' after expression");
         return new Stmt.ExprStmt(expr);
+    }
+
+    private Stmt ifStmt() {
+        consume(LPAREN, "Expected '(' after if");
+        Expr condition = expr();
+        consume(LPAREN, "Expected ')' after condition");
+        Stmt thenBranch = stmt();
+        Stmt elseBranch = null;
+        if (match(ELSE)) {
+            elseBranch = stmt();
+        }
+        return new Stmt.If(condition, thenBranch, elseBranch);
     }
 
     private Expr expr() {
